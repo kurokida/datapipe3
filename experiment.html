@@ -4,17 +4,29 @@
     <title>My experiment</title>
     <script src="https://unpkg.com/jspsych@7.3.2"></script>
     <script src="https://unpkg.com/@jspsych/plugin-html-keyboard-response@1.1.2"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-pipe"></script>
     <link href="https://unpkg.com/jspsych@7.3.2/css/jspsych.css" rel="stylesheet" type="text/css" />
   </head>
   <body></body>
   <script>
     const jsPsych = initJsPsych();
 
+    const subject_id = jsPsych.randomization.randomID(10);
+    const filename = `${subject_id}.csv`;
+            
     const hello_trial = {
       type: jsPsychHtmlKeyboardResponse,
       stimulus: 'Hello world!'
     }
+    
+    const save_data = {
+      type: jsPsychPipe,
+      action: "save",
+      experiment_id: "0OEr3EfICc11",
+      filename: filename,
+      data_string: ()=>jsPsych.data.get().csv()
+    };
 
-    jsPsych.run([hello_trial]);
+    jsPsych.run([hello_trial, save_data]);
   </script>
 </html>
